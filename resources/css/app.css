@@ -1,0 +1,158 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --color-sunny:   #FFF44F;
+        --color-lime:    #AADF28;
+        --color-citrus:  #FF9500;
+        --color-mint:    #00C896;
+        --color-white:   #FAFFFE;
+        --color-cream:   #FFFDF0;
+        --navbar-height: 80px;
+    }
+
+    html {
+        scroll-behavior: smooth;
+    }
+
+    body {
+        background-color: var(--color-white);
+        color: #1a1a1a;
+        overflow-x: hidden;
+        font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+
+    /* Lenis smooth scroll v1.3 */
+    html.lenis,
+    html.lenis body {
+        height: auto;
+    }
+    .lenis.lenis-smooth {
+        scroll-behavior: auto !important;
+    }
+    .lenis.lenis-smooth [data-lenis-prevent] {
+        overscroll-behavior: contain;
+    }
+    .lenis.lenis-stopped {
+        overflow: hidden;
+    }
+    .lenis.lenis-smooth iframe {
+        pointer-events: none;
+    }
+}
+
+@layer components {
+    /* ---- Buttons ---- */
+    .btn-primary {
+        @apply inline-flex items-center gap-2 px-7 py-3.5 bg-gradient-to-r from-sunny-400 to-lime-400
+               text-gray-900 font-accent font-700 rounded-full text-sm tracking-wide
+               shadow-sunny transition-all duration-300
+               hover:shadow-lime hover:scale-105 hover:-translate-y-0.5 active:scale-95;
+    }
+    .btn-outline {
+        @apply inline-flex items-center gap-2 px-7 py-3.5 border-2 border-lime-400
+               text-lime-700 font-accent font-600 rounded-full text-sm tracking-wide
+               transition-all duration-300
+               hover:bg-lime-400 hover:text-gray-900 hover:shadow-lime active:scale-95;
+    }
+    .btn-ghost {
+        @apply inline-flex items-center gap-2 px-6 py-3 text-gray-700 font-accent font-500
+               rounded-full text-sm tracking-wide transition-all duration-300
+               hover:bg-sunny-100 hover:text-gray-900 active:scale-95;
+    }
+
+    /* ---- Cards ---- */
+    .card-glass {
+        @apply bg-white/70 backdrop-blur-sm border border-white/80 rounded-3xl shadow-glass;
+    }
+    .card-product {
+        @apply bg-white rounded-4xl overflow-hidden shadow-lg hover:shadow-float
+               transition-all duration-500 hover:-translate-y-2 cursor-pointer;
+    }
+
+    /* ---- Section Headings ---- */
+    .section-tag {
+        @apply inline-flex items-center gap-2 px-4 py-1.5 bg-lime-100 text-lime-700
+               rounded-full text-xs font-accent font-600 tracking-widest uppercase;
+    }
+    .section-title {
+        @apply font-display text-4xl md:text-5xl lg:text-6xl font-700 leading-tight text-gray-900;
+    }
+    .section-subtitle {
+        @apply text-gray-500 font-body text-lg leading-relaxed max-w-2xl;
+    }
+
+    /* ---- Form ---- */
+    .form-input {
+        @apply w-full px-5 py-4 bg-white border border-gray-200 rounded-2xl
+               font-body text-gray-800 placeholder-gray-400 text-sm
+               focus:outline-none focus:ring-2 focus:ring-lime-300 focus:border-lime-400
+               transition-all duration-200;
+    }
+    .form-label {
+        @apply block text-sm font-accent font-600 text-gray-700 mb-2 tracking-wide;
+    }
+
+    /* ---- Navbar ---- */
+    .nav-link {
+        @apply relative font-accent font-500 text-gray-700 text-sm tracking-wide
+               transition-colors duration-200 hover:text-lime-600
+               after:absolute after:bottom-0 after:left-0 after:w-0 after:h-0.5
+               after:bg-lime-400 after:transition-all after:duration-300
+               hover:after:w-full;
+    }
+    .nav-link.active {
+        @apply text-lime-600 after:w-full;
+    }
+
+    /* ---- Bubble / Blob ---- */
+    .blob {
+        @apply absolute rounded-full blur-3xl opacity-30 pointer-events-none;
+        animation: float 8s ease-in-out infinite;
+    }
+
+    /* ---- Shimmer ---- */
+    .shimmer {
+        background: linear-gradient(90deg, transparent 25%, rgba(255,244,79,0.3) 50%, transparent 75%);
+        background-size: 200% 100%;
+        animation: shimmer 2.5s linear infinite;
+    }
+}
+
+@layer utilities {
+    .font-700 { font-weight: 700; }
+    .font-600 { font-weight: 600; }
+    .font-500 { font-weight: 500; }
+
+    .text-gradient-sunny {
+        background: linear-gradient(135deg, #D4A800, #AADF28);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+    .text-gradient-lime {
+        background: linear-gradient(135deg, #84cc16, #00C896);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    /* Clip paths for decorative shapes */
+    .clip-wave {
+        clip-path: ellipse(80% 60% at 50% 40%);
+    }
+    .clip-circle {
+        clip-path: circle(50% at 50% 50%);
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: var(--color-cream); }
+    ::-webkit-scrollbar-thumb { background: var(--color-lime); border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #84cc16; }
+
+    /* Selection */
+    ::selection { background: #FFF44F; color: #1a1a1a; }
+}

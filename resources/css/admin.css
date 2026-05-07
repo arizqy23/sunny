@@ -1,0 +1,125 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        --color-sunny:   #FFF44F;
+        --color-lime:    #AADF28;
+        --sidebar-w:     16rem;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+        font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+    }
+
+    /* Custom scrollbar */
+    ::-webkit-scrollbar       { width: 5px; height: 5px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: #e2e8f0; border-radius: 3px; }
+    ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+    /* Selection */
+    ::selection { background: #AADF28; color: #1a1a1a; }
+
+    /* Sidebar scrollbar dark */
+    aside ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); }
+    aside ::-webkit-scrollbar-thumb:hover { background: rgba(255,255,255,0.2); }
+}
+
+@layer utilities {
+    .font-jakarta { font-family: 'Plus Jakarta Sans', system-ui, sans-serif; }
+
+    /* Toggle switch */
+    input[type="checkbox"].sr-only + div {
+        cursor: pointer;
+    }
+
+    /* Livewire loading state */
+    [wire\:loading] { opacity: 0.6; pointer-events: none; }
+
+    /* Prose for article content preview */
+    .admin-prose h2 { @apply text-lg font-bold text-slate-900 mt-4 mb-2; }
+    .admin-prose h3 { @apply text-base font-bold text-slate-800 mt-3 mb-1.5; }
+    .admin-prose p  { @apply text-slate-600 text-sm leading-relaxed mb-3; }
+    .admin-prose ul { @apply list-disc list-inside text-slate-600 text-sm space-y-1 mb-3; }
+    .admin-prose ol { @apply list-decimal list-inside text-slate-600 text-sm space-y-1 mb-3; }
+    .admin-prose blockquote { @apply border-l-4 border-lime-400 pl-4 text-slate-500 italic text-sm my-3; }
+    .admin-prose strong { @apply font-bold text-slate-900; }
+}
+
+@layer components {
+    /* ── Stat card ──────────────────────────────────────────────── */
+    .stat-card {
+        @apply bg-white rounded-2xl p-5 border border-slate-100 shadow-sm
+               hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 cursor-pointer;
+    }
+
+    /* ── Form controls ──────────────────────────────────────────── */
+    .admin-input {
+        @apply w-full px-4 py-2.5 border border-slate-200 rounded-xl text-sm
+               focus:outline-none focus:ring-2 focus:ring-lime-500/30 focus:border-lime-500
+               transition-all duration-200 bg-white text-slate-800 placeholder-slate-400;
+    }
+    .admin-input.error {
+        @apply border-red-400 bg-red-50 focus:ring-red-400/30 focus:border-red-400;
+    }
+
+    /* ── Badge ──────────────────────────────────────────────────── */
+    .badge {
+        @apply inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-bold;
+    }
+    .badge-lime    { @apply bg-lime-100 text-lime-700; }
+    .badge-red     { @apply bg-red-100 text-red-700; }
+    .badge-slate   { @apply bg-slate-100 text-slate-600; }
+    .badge-yellow  { @apply bg-yellow-100 text-yellow-700; }
+
+    /* ── Button ─────────────────────────────────────────────────── */
+    .btn-primary {
+        @apply inline-flex items-center gap-2 px-5 py-2.5
+               bg-gradient-to-r from-lime-500 to-lime-400 text-gray-900 font-bold text-sm
+               rounded-xl shadow-sm hover:shadow-lime-500/30 hover:-translate-y-0.5
+               transition-all duration-200 active:translate-y-0;
+    }
+    .btn-secondary {
+        @apply inline-flex items-center gap-2 px-5 py-2.5
+               bg-white border border-slate-200 text-slate-700 font-semibold text-sm
+               rounded-xl hover:bg-slate-50 transition-colors shadow-sm;
+    }
+    .btn-danger {
+        @apply inline-flex items-center gap-2 px-5 py-2.5
+               bg-red-600 text-white font-semibold text-sm
+               rounded-xl hover:bg-red-700 transition-colors shadow-sm;
+    }
+
+    /* ── Table ──────────────────────────────────────────────────── */
+    .admin-table {
+        @apply w-full text-sm;
+    }
+    .admin-table thead tr {
+        @apply border-b border-slate-100 bg-slate-50/50;
+    }
+    .admin-table thead th {
+        @apply text-left px-6 py-3.5 text-xs font-bold text-slate-500 uppercase tracking-wider;
+    }
+    .admin-table tbody tr {
+        @apply border-b border-slate-50 hover:bg-slate-50/50 transition-colors;
+    }
+    .admin-table tbody td {
+        @apply px-6 py-4;
+    }
+
+    /* ── Toggle switch ──────────────────────────────────────────── */
+    .toggle-wrapper {
+        @apply relative inline-flex items-center cursor-pointer;
+    }
+    .toggle-bg {
+        @apply w-11 h-6 rounded-full transition-colors duration-200;
+    }
+    .toggle-dot {
+        @apply absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow
+               transition-transform duration-200;
+    }
+}

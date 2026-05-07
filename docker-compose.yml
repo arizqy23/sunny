@@ -1,0 +1,85 @@
+version: '3.8'
+
+services:
+  # ── Laravel App ──────────────────────────────────────────
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: sunny_app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+      - ./storage:/var/www/storage
+    networks:
+      - sunny_network
+    depends_on:
+      - mysql
+      - redis
+
+  # ── Nginx ─────────────────────────────────────────────────
+  nginx:
+    image: nginx:alpine
+    container_name: sunny_nginx
+    restart: unless-stopped
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www
+      - ./docker/nginx/sunny.conf:/etc/nginx/conf.d/default.conf
+    networks:
+      - sunny_network
+    depends_on:
+      - app
+
+  # ── MySQL ─────────────────────────────────────────────────
+  mysql:
+    image: mysql:8.0
+    container_name: sunny_mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_DATABASE: sunny_db
+      MYSQL_ROOT_PASSWORD: secret
+      MYSQL_USER: sunny
+      MYSQL_PASSWORD: secret
+    volumes:
+      - sunny_mysql_data:/var/lib/mysql
+      - ./docker/mysql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+    networks:
+      - sunny_network
+
+  # ── Redis ─────────────────────────────────────────────────
+  redis:
+    image: redis:alpine
+    container_name: sunny_redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    networks:
+      - sunny_network
+
+  # ── Vite Dev Server ───────────────────────────────────────
+  vite:
+    image: node:18-alpine
+    container_name: sunny_vite
+    working_dir: /var/www
+    volumes:
+      - .:/var/www
+    ports:
+      - "5173:5173"
+    command: sh -c "npm install && npm run dev -- --host 0.0.0.0"
+    networks:
+      - sunny_network
+    profiles:
+      - dev
+
+networks:
+  sunny_network:
+    driver: bridge
+
+volumes:
+  sunny_mysql_data:
+    driver: local
